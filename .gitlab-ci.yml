@@ -1,0 +1,28 @@
+image: centos:7
+
+variables:
+  CI: "true"
+
+before_script:
+  - yum install -y make
+  - yum -y install https://packages.chef.io/stable/el/7/chefdk-0.12.0-1.el7.x86_64.rpm
+  - make ci-prepare-env
+
+stages:
+  - spec
+  - test
+
+lint:
+  stage: spec
+  script:
+  - make lint
+
+spec:
+  stage: spec
+  script:
+  - make spec
+
+kitchen:
+  stage: test
+  script:
+  - make kitchen
