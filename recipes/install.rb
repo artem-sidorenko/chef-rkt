@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rkt
-# Recipe:: default
+# Recipe:: install
 #
 # License: Apache 2.0
 #
@@ -10,4 +10,9 @@
 # and at https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT
 #
 
-include_recipe "#{cookbook_name}::install"
+case node['rkt']['install']['type']
+when 'tgz'
+  include_recipe "#{cookbook_name}::install_tgz"
+else
+  raise "Unsupported installation type '#{node['rkt']['install']['type']}'"
+end

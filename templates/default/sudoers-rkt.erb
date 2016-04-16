@@ -1,0 +1,5 @@
+# This file is managed by Chef. Changes will be overwritten.
+%<%= @group %> ALL = NOPASSWD:<%= @rkt_bin %>
+# Centos has requiretty enabled by default
+# and some things do not work
+Defaults!<%= @rkt_bin %> !requiretty
