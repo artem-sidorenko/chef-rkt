@@ -16,12 +16,11 @@ before_script:
   - make ci-prepare-env
 
 stages:
-  - lint
   - spec
   - test
 
 lint:
-  stage: lint
+  stage: spec
   script:
   - make lint
 

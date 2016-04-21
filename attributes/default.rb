@@ -1,0 +1,9 @@
+default['rkt']['install']['type'] = 'tgz'
+default['rkt']['install']['version'] = '1.4.0'
+default['rkt']['install']['tgz']['target_dir'] = '/opt/rkt'
+default['rkt']['install']['tgz']['target_bin'] = '/usr/bin/rkt'
+default['rkt']['install']['tgz']['etc_dir'] = '/etc/rkt'
+default['rkt']['install']['tgz']['usr_dir'] = '/usr/lib/rkt'
+default['rkt']['install']['tgz']['var_dir'] = '/var/lib/rkt'
+default['rkt']['install']['tgz']['group_name'] = 'rkt'
+default['rkt']['install']['tgz']['sudo'] = true

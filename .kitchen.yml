@@ -31,3 +31,11 @@ suites:
   - name: default
     run_list:
       - recipe[rkt::default]
+  - name: without-sudo
+    run_list:
+      - recipe[rkt::default]
+    attributes:
+      rkt:
+        install:
+          tgz:
+            sudo: false
