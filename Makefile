@@ -23,7 +23,7 @@ ci-prepare-env:
 	@if [ ! -f "$(CI_DOWNLOAD_CACHE)/$$CHEFDK_FILE" ]; then \
 	  yum -y install wget && \
 	  mkdir -p "$(CI_DOWNLOAD_CACHE)" && \
-	  wget -O $(CI_DOWNLOAD_CACHE)/$$CHEFDK_FILE "$$CHEFDK_URL"; \
+	  wget --progress=dot:giga -O $(CI_DOWNLOAD_CACHE)/$$CHEFDK_FILE "$$CHEFDK_URL"; \
 	fi
 	@echo "$$CHEFDK_SHA256 $(CI_DOWNLOAD_CACHE)/$$CHEFDK_FILE" > $(CI_DOWNLOAD_CACHE)/$$CHEFDK_FILE.sha256
 	sha256sum -c $(CI_DOWNLOAD_CACHE)/$$CHEFDK_FILE.sha256
