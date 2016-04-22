@@ -6,6 +6,8 @@ Chef cookbook for management of coreos rkt.
 * [Contributing](#contributing)
 * [License and copyright](#license-and-copyright)
 
+This cookbook is currently under heavy development.
+
 Contributing
 ------------
 Please see the [contribution guide](CONTRIBUTING.md)
