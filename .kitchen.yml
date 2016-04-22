@@ -8,10 +8,10 @@ driver:
 platforms:
 - name: centos-7-0-x64
   transport:
-   ssh_key: "<%= ENV['CI_SSH_PEM'] %>"
+   ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
 - name: ubuntu-14-04-x64
   transport:
-   ssh_key: "<%= ENV['CI_SSH_PEM'] %>"
+   ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
 <% else %>
 driver:
   name: vagrant
