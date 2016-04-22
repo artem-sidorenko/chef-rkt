@@ -5,7 +5,8 @@ end
 
 describe command('rkt fetch coreos.com/etcd:v2.3.1') do
   its('exit_status') { should eq 0 }
-  its('stdout') { should match 'sha512-73fd40eb3c0b632ff75c17e31a57eb1a' }
+  its('stderr') { should match "image: signature verified:\n  CoreOS Application Signing Key <security@coreos.com>" }
+  its('stdout') { should match 'sha512-' }
 end
 
 describe command('rkt --insecure-options=image run docker://busybox --exec /bin/true') do
