@@ -20,9 +20,10 @@ export KITCHEN_OPTS?=--log-level=info
 export DEPLOY_USERNAME?=$(CI_STOVE_USERNAME)
 export DEPLOY_KEY?=$(CI_STOVE_KEY)
 
-.PHONY: all ci-prepare-env lint spec kitchen
+.PHONY: all ci-prepare-env lint spec kitchen test
 
-all: lint spec kitchen
+all: test
+test: lint spec kitchen
 
 ci-prepare-env:
 	@echo "CI: Preparing environment..."
