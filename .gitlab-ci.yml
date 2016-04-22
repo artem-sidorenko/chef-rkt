@@ -1,7 +1,6 @@
 image: centos:7
 
 variables:
-  CI: "true"
   CHEFDK_URL: "https://packages.chef.io/stable/el/7/chefdk-0.12.0-1.el7.x86_64.rpm"
   CHEFDK_FILE: "chefdk-0.12.0-1.el7.x86_64.rpm"
   CHEFDK_SHA256: "4a2a41f0b676fcbf1b778d37f491b0a74606b9dc6869deb05fff157473fa5a4a"
@@ -18,6 +17,7 @@ before_script:
 stages:
   - spec
   - test
+  - deploy
 
 lint:
   stage: spec
@@ -33,3 +33,10 @@ kitchen:
   stage: test
   script:
   - make kitchen
+
+release:
+  stage: deploy
+  script:
+  - make deploy
+  only:
+  - /^v[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]*$/

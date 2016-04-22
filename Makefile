@@ -9,10 +9,16 @@
 
 export CI?=
 export CI_SSH_DIR?=~/.ssh
-export CI_SSH_PEM?=$(CI_SSH_DIR)/ci_id_rsa
+export CI_SSH_KEY?=$(CI_SSH_DIR)/ci_id_rsa
 export CI_SSH_KEY_PEM?=
 export CI_DOWNLOAD_CACHE?=.cache
-export KITCHEN_OPTS=--log-level=info
+export CI_STOVE_DIR?=~/.stovedir
+export CI_STOVE_KEY?=$(CI_STOVE_DIR)/supermarket.pem
+export CI_STOVE_KEY_PEM?=
+export CI_STOVE_USERNAME?=
+export KITCHEN_OPTS?=--log-level=info
+export DEPLOY_USERNAME?=$(CI_STOVE_USERNAME)
+export DEPLOY_KEY?=$(CI_STOVE_KEY)
 
 .PHONY: all ci-prepare-env lint spec kitchen
 
@@ -32,12 +38,20 @@ ci-prepare-env:
 	ln -s $(shell pwd)/$(CI_DOWNLOAD_CACHE)/chefdk ~/.chefdk
 	chef exec bundle install
 	@mkdir -p $(CI_SSH_DIR)
-	@if [ ! -f $(CI_SSH_PEM) ]; then \
+	@if [ ! -f $(CI_SSH_KEY) ]; then \
 	  echo "CI: Creating ssh keys..."; \
-	  echo "$${CI_SSH_KEY_PEM}" > $(CI_SSH_PEM); \
-	  chmod 600 $(CI_SSH_PEM); \
+	  echo "$${CI_SSH_KEY_PEM}" > $(CI_SSH_KEY); \
+	  chmod 600 $(CI_SSH_KEY); \
 	else \
 	  echo "CI: ssh keys are present, skipping creation"; \
+	fi
+	@mkdir -p $(CI_STOVE_DIR)
+	@if [ ! -f $(CI_STOVE_KEY) ]; then \
+	  echo "CI: Creating stove key..."; \
+	  echo "$${CI_STOVE_KEY_PEM}" > $(CI_STOVE_KEY); \
+	  chmod 600 $(CI_STOVE_KEY); \
+	else \
+	  echo "CI: stove key is present, skipping creation"; \
 	fi
 
 lint:
@@ -52,3 +66,20 @@ kitchen:
 	  export KITCHEN_OPTS="$(KITCHEN_OPTS) -c10 --destroy=always"; \
 	fi; \
 	kitchen test $$KITCHEN_OPTS
+
+deploy:
+	@if [ -n "$(CI)" ]; then \
+	  METADATA_VERSION=v$$(sed -n "s/[[:space:]]*version[[:space:]]*'\([[:digit:]]*\.[[:digit:]]*\.[[:digit:]]*\)'.*/\1/p" metadata.rb); \
+	  if [ -z "$$METADATA_VERSION" -o -z "$$CI_BUILD_TAG" ]; then \
+	    echo "CI: can't determine either the CI version tag or the version from metadata.rb"; \
+	    exit 1; \
+	  fi; \
+	  if [ "$$METADATA_VERSION" != "$$CI_BUILD_TAG" ]; then \
+	    echo "CI: version mismatch between CI tag and version from metadata.rb:";\
+	    echo "    metadata.rb: $${METADATA_VERSION}"; \
+	    echo "    CI tag     : $${CI_BUILD_TAG}"; \
+	    exit 1; \
+	  fi; \
+	fi
+	@echo "Deploying to chef supermarket..."
+	@chef exec stove --no-git --username "$(DEPLOY_USERNAME)" --key "$(DEPLOY_KEY)" --extended-metadata
