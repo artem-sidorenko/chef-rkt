@@ -7,3 +7,4 @@ default['rkt']['install']['tgz']['usr_dir'] = '/usr/lib/rkt'
 default['rkt']['install']['tgz']['var_dir'] = '/var/lib/rkt'
 default['rkt']['install']['tgz']['group_name'] = 'rkt'
 default['rkt']['install']['tgz']['sudo'] = true
+default['rkt']['install']['package']['name'] = 'rkt'

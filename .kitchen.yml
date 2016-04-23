@@ -39,3 +39,11 @@ suites:
         install:
           tgz:
             sudo: false
+  - name: packages
+    run_list:
+      - recipe[rkt_test::repositories]
+      - recipe[rkt::default]
+    attributes:
+      rkt:
+        install:
+          type: 'package'

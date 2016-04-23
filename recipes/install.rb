@@ -13,6 +13,8 @@
 case node['rkt']['install']['type']
 when 'tgz'
   include_recipe "#{cookbook_name}::install_tgz"
+when 'package'
+  include_recipe "#{cookbook_name}::install_package"
 else
   raise "Unsupported installation type '#{node['rkt']['install']['type']}'"
 end
