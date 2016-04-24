@@ -20,6 +20,14 @@ This cookbook uses
  - [chefspec](http://sethvargo.github.io/chefspec/) for unit tests
  - [inspec](https://github.com/chef/inspec) with [test-kitchen](http://kitchen.ci/) for integration tests
 
+Its a good idea to install [ChefDK](https://downloads.chef.io/chef-dk/) and some gems:
+```bash
+# Example for Centos 7
+$ yum -y install https://packages.chef.io/stable/el/7/chefdk-0.12.0-1.el7.x86_64.rpm
+# Install required gems
+$ chef exec bundle install
+```
+
 Check linting:
 ```bash
 $ make lint
@@ -44,7 +52,10 @@ Please add/extend according tests together with code changes.
 
 Linting and unit tests can be executed automatically within your fork by GitLab CI runners of gitlab.com.
 
-Integration tests require VMs on [DigitalOcean](https://www.digitalocean.com/).
+Integration tests require VMs:
+ - in case of local execution [vagrant](http://vagrantup.com/) with [virtualbox](http://virtualbox.org/) is used as provider. 
+ - in case of CI execution [DigitalOcean](https://www.digitalocean.com/) is used as provider.
+
 If you want to execute integration tests automatically via GitLab CI you should configure [secret variables](http://doc.gitlab.com/ee/ci/variables/README.html#user-defined-variables-secure-variables) in your fork:
  - `DIGITALOCEAN_ACCESS_TOKEN` - Your DigitalOcean [access token](https://www.digitalocean.com/community/tutorials/how-to-use-the-digitalocean-api-v2)
  - `DIGITALOCEAN_SSH_KEY_IDS` - DigitalOcean ID of ssh key which is used in order to access the VMs
