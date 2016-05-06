@@ -9,6 +9,12 @@ describe command('rkt fetch coreos.com/etcd:v2.3.1') do
   its('stdout') { should match 'sha512-' }
 end
 
+describe command('rkt image rm coreos.com/etcd') do
+  its('exit_status') { should eq 0 }
+  its('stderr') { should match "rm: 1 image(s) successfully removed\n" }
+  its('stdout') { should match 'successfully removed aci for image: "sha512-' }
+end
+
 describe command('rkt --insecure-options=image run docker://busybox --exec /bin/true') do
   its('exit_status') { should eq 0 }
 end
