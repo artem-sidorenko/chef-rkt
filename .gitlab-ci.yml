@@ -29,10 +29,20 @@ spec:
   script:
   - make spec
 
-kitchen:
+kitchen default:
   stage: test
   script:
-  - make kitchen
+  - make kitchen KITCHEN_INSTANCE='default-'
+
+kitchen packages:
+  stage: test
+  script:
+  - make kitchen KITCHEN_INSTANCE='packages-'
+
+kitchen without-sudo:
+  stage: test
+  script:
+  - make kitchen KITCHEN_INSTANCE='without-sudo-'
 
 release:
   stage: deploy

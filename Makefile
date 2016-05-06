@@ -17,6 +17,7 @@ export CI_STOVE_KEY?=$(CI_STOVE_DIR)/supermarket.pem
 export CI_STOVE_KEY_PEM?=
 export CI_STOVE_USERNAME?=
 export KITCHEN_OPTS?=--log-level=info
+export KITCHEN_INSTANCE?=
 export DEPLOY_USERNAME?=$(CI_STOVE_USERNAME)
 export DEPLOY_KEY?=$(CI_STOVE_KEY)
 
@@ -66,7 +67,7 @@ kitchen:
 	@if [ -n "$(CI)" ]; then \
 	  export KITCHEN_OPTS="$(KITCHEN_OPTS) -c10 --destroy=always"; \
 	fi; \
-	kitchen test $$KITCHEN_OPTS
+	kitchen test $$KITCHEN_OPTS $(KITCHEN_INSTANCE)
 
 deploy:
 	@if [ -n "$(CI)" ]; then \
