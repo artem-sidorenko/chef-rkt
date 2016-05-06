@@ -1,3 +1,14 @@
+#
+# License: Apache 2.0
+#
+# Copyright: 2016 Artem Sidorenko and contributors.
+#
+# See the COPYRIGHT file at the top-level directory of this distribution
+# and at https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT
+#
+
+# Here we test if rkt works properly and as expected
+
 describe command('rkt trust --prefix=coreos.com/etcd --trust-keys-from-https=true') do
   its('exit_status') { should eq 0 }
   its('stdout') { should match 'Added key for prefix "coreos.com/etcd" at' }
