@@ -31,9 +31,11 @@ suites:
   - name: default
     run_list:
       - recipe[rkt::default]
+      - recipe[rkt_test::default]
   - name: without-sudo
     run_list:
       - recipe[rkt::default]
+      - recipe[rkt_test::default]
     attributes:
       rkt:
         install:
@@ -43,6 +45,7 @@ suites:
     run_list:
       - recipe[rkt_test::repositories]
       - recipe[rkt::default]
+      - recipe[rkt_test::default]
     attributes:
       rkt:
         install:
