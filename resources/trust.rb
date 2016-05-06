@@ -10,19 +10,50 @@
 # and at https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT
 #
 
-property :prefix, String
+require 'fileutils'
+
+property :prefix, String, name_property: true
 property :insecure_allow_http, [TrueClass, FalseClass], default: false
 property :skip_fingerprint_review, [TrueClass, FalseClass], default: false
 property :trust_keys_from_https, [TrueClass, FalseClass], default: false
-property :root, [TrueClass, FalseClass], default: false
 property :pubkey, String
 
 default_action :create
 
+def whyrun_supported?
+  true
+end
+
+trustedkeys_prefix_path = '/etc/rkt/trustedkeys/prefix.d'
+
 action :create do
-  raise 'Not implemented'
+  # We do not support fingerprint verification by now, so lets fail
+  # if we have no way to handle the fingerprint verification
+  if !skip_fingerprint_review && !trust_keys_from_https
+    raise "#{new_resource} - skip_fingerprint_review or trust_keys_from_https should be allowed"
+  end
+  if Dir.exist?("#{trustedkeys_prefix_path}/#{prefix}")
+    Chef::Log.info("#{new_resource} already exists - nothing to do")
+  else
+    converge_by("#{new_resource} creating trust for prefix #{prefix}") do
+      cmd = "rkt trust --prefix=#{prefix}"
+      cmd += ' --skip-fingerprint-review=true' if skip_fingerprint_review
+      cmd += ' --insecure-allow-http=true' if insecure_allow_http
+      cmd += ' --trust-keys-from-https=true' if trust_keys_from_https
+      if Mixlib::ShellOut.new(cmd).run_command.error?
+        raise "#{new_resource} action create failed, following command line was called: #{cmd}"
+      end
+    end
+  end
 end
 
 action :delete do
-  raise 'Not implemented'
+  prefix_path = "#{trustedkeys_prefix_path}/#{prefix}"
+  if !Dir.exist?(prefix_path)
+    Chef::Log.info("#{new_resource} doesn't exists - nothing to do")
+  else
+    converge_by("#{new_resource} deleting trust for prefix #{prefix}") do
+      FileUtils.remove_dir(prefix_path)
+    end
+  end
 end

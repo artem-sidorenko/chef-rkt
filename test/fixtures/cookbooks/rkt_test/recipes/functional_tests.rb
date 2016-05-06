@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rkt_test
-# Recipe:: default
+# Recipe:: functional_tests
 #
 # License: Apache 2.0
 #
@@ -10,4 +10,7 @@
 # and at https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT
 #
 
-include_recipe "#{cookbook_name}::functional_tests"
+# This recipe calls runs other recipes with
+# tests for rkt cookbook
+
+include_recipe "#{cookbook_name}::test_trust"
