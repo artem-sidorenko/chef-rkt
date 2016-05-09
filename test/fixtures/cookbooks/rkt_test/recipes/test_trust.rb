@@ -13,12 +13,14 @@
 # This recipe creates some different resources with rkt_trust LWRP
 # and triggers different actions
 
-rkt_trust 'coreos.com/etcd' do
+rkt_trust 'coreos.com/etcd-trust-create' do
+  prefix 'coreos.com/etcd'
   action :create
   trust_keys_from_https true
 end
 
-rkt_trust 'coreos.com/etcd' do
+rkt_trust 'coreos.com/etcd-trust-delete' do
+  prefix 'coreos.com/etcd'
   action :delete
 end
 
