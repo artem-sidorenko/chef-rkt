@@ -17,3 +17,9 @@ end
 describe file('/etc/rkt/trustedkeys/prefix.d/coreos.com/dnsmasq/18ad5014c99ef7e3ba5f6ce950bdd3e0fc8a365e') do
   it { should be_file }
 end
+
+# recipe: test_image
+describe command('rkt image list --no-legend=true --fields=name') do
+  its('exit_status') { should eq 0 }
+  its('stdout') { should match 'coreos.com/dnsmasq:v0.2.0' }
+end

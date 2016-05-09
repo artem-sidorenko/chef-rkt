@@ -10,6 +10,8 @@
 # and at https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT
 #
 
+require_relative '../libraries/helpers'
+
 require 'fileutils'
 
 property :prefix, String, name_property: true
@@ -36,13 +38,11 @@ action :create do
     Chef::Log.info("#{new_resource} already exists - nothing to do")
   else
     converge_by("#{new_resource} creating trust for prefix #{prefix}") do
-      cmd = "rkt trust --prefix=#{prefix}"
-      cmd += ' --skip-fingerprint-review=true' if skip_fingerprint_review
-      cmd += ' --insecure-allow-http=true' if insecure_allow_http
-      cmd += ' --trust-keys-from-https=true' if trust_keys_from_https
-      if Mixlib::ShellOut.new(cmd).run_command.error?
-        raise "#{new_resource} action create failed, following command line was called: #{cmd}"
-      end
+      cmd_args = ["--prefix=#{prefix}"]
+      cmd_args << '--skip-fingerprint-review=true' if skip_fingerprint_review
+      cmd_args << '--insecure-allow-http=true' if insecure_allow_http
+      cmd_args << '--trust-keys-from-https=true' if trust_keys_from_https
+      rkt_run_cmd('trust', cmd_args, 'create')
     end
   end
 end

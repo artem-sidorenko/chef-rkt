@@ -14,3 +14,4 @@
 # tests for rkt cookbook
 
 include_recipe "#{cookbook_name}::test_trust"
+include_recipe "#{cookbook_name}::test_image"
