@@ -12,16 +12,50 @@
 require 'spec_helper'
 
 describe 'rkt::install' do
+  let(:install_type) { 'tgz' }
+  let(:systemd_system) { false }
+  let(:ubuntu_platform) { false }
   let(:chef_run) do
     ChefSpec::SoloRunner.new do |node|
       node.set['rkt']['install']['type'] = install_type
+      node.automatic['packages']['systemd'] = systemd_system ? { version: '229-XYZ' } : nil
+      node.automatic['platform'] = ubuntu_platform ? 'ubuntu' : 'someotherplatform'
     end.converge(described_recipe)
+  end
+
+  describe 'machinectl installation' do
+    context 'ubuntu with systemd' do
+      let(:systemd_system) { true }
+      let(:ubuntu_platform) { true }
+
+      it 'should install systemd-container' do
+        expect(chef_run).to install_package('systemd-container')
+      end
+    end
+
+    context 'non-ubuntu with systemd' do
+      let(:systemd_system) { true }
+      let(:ubuntu_platform) { false }
+
+      it 'should not install systemd-container' do
+        expect(chef_run).not_to install_package('systemd-container')
+      end
+    end
+
+    context 'ubuntu without systemd' do
+      let(:systemd_system) { false }
+      let(:ubuntu_platform) { true }
+
+      it 'should not install systemd-container' do
+        expect(chef_run).not_to install_package('systemd-container')
+      end
+    end
   end
 
   context 'unknown installation type' do
     let(:install_type) { 'none' }
 
-    it 'should raise an exeption' do
+    it 'should raise an exception' do
       expect { chef_run }.to raise_error(RuntimeError, 'Unsupported installation type \'none\'')
     end
   end

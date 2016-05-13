@@ -23,3 +23,15 @@ describe command('rkt image list --no-legend=true --fields=name') do
   its('exit_status') { should eq 0 }
   its('stdout') { should match 'coreos.com/dnsmasq:v0.2.0' }
 end
+
+# recipe: test_pod
+describe command('rkt list --no-legend=true') do
+  its('exit_status') { should eq 0 }
+  its('stdout') { should match '.*dnsmasq.*coreos.com/dnsmasq:v0.2.0.*running.*' }
+end
+
+describe service('rkt-dnsmasq') do
+  it { should be_installed }
+  it { should be_enabled }
+  it { should be_running }
+end

@@ -10,6 +10,9 @@
 # and at https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT
 #
 
+# install machinectl on ubuntu
+package 'systemd-container' if node['packages']['systemd'] && node['platform'] == 'ubuntu'
+
 case node['rkt']['install']['type']
 when 'tgz'
   include_recipe "#{cookbook_name}::install_tgz"
