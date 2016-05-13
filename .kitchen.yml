@@ -14,6 +14,10 @@ platforms:
   transport:
    ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
    max_wait_until_ready: 30
+- name: ubuntu-16-04-x64
+  transport:
+   ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
+   max_wait_until_ready: 30
 <% else %>
 driver:
   name: vagrant
@@ -21,6 +25,7 @@ driver:
 platforms:
 - name: bento/centos-7.2
 - name: bento/ubuntu-14.04
+- name: bento/ubuntu-16.04
 <% end %>
 
 provisioner:
