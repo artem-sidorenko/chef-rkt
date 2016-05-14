@@ -1,6 +1,8 @@
 chef-rkt
 ========
 
+[![build status](https://gitlab.com/artem-sidorenko/chef-rkt/badges/master/build.svg)](https://gitlab.com/artem-sidorenko/chef-rkt/commits/master) [![cookbook version](https://img.shields.io/cookbook/v/rkt.svg)](https://supermarket.chef.io/cookbooks/rkt)
+
 Chef cookbook for management of coreos rkt.
 
 * [Contributing](#contributing)
