@@ -22,6 +22,8 @@ when 'rhel'
     action :create
   end
 when 'debian'
+  package 'apt-transport-https'
+
   apt_repository 'rkt' do
     uri 'https://users.2realities.com/~artem/rkt/deb/'
     components ['/']

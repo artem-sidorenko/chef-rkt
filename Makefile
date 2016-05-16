@@ -65,7 +65,7 @@ spec:
 
 kitchen:
 	@if [ -n "$(CI)" ]; then \
-	  export KITCHEN_OPTS="$(KITCHEN_OPTS) -c10 --destroy=always"; \
+	  export KITCHEN_OPTS="$(KITCHEN_OPTS) -c2 --destroy=always"; \
 	fi; \
 	kitchen test $$KITCHEN_OPTS $(KITCHEN_INSTANCE)
 
