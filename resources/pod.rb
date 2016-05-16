@@ -63,5 +63,24 @@ action :create do
 end
 
 action :delete do
-  raise 'Not implemented'
+  service_name = "rkt-#{name}"
+
+  service service_name do
+    action [:stop, :disable]
+  end
+  if node['packages']['upstart']
+    file "/etc/init/#{service_name}.conf" do
+      action :delete
+    end
+  elsif node['packages']['systemd']
+    systemd_service service_name do
+      action :delete
+    end
+  else
+    raise "#{new_resource} action :delete failed,
+           Can't find one of supported init systems:
+            - systemd
+            - upstart
+          "
+  end
 end

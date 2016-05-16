@@ -19,11 +19,20 @@ rkt_pod 'dnsmasq' do
   image 'coreos.com/dnsmasq:v0.2.0'
 end
 
-# wait about 5 secs: pod spawning takes some time,
+rkt_pod 'dnsmasq-deleted' do
+  action :create
+  image 'coreos.com/dnsmasq:v0.2.0'
+end
+
+# wait about 10 secs: pod spawning takes some time,
 # and if we continue directly we might get false-positivies in our tests
-ruby_block 'sleep-for-5-secs' do
+ruby_block 'sleep-for-10-secs' do
   block do
-    sleep(5)
+    sleep(10)
   end
   action :run
+end
+
+rkt_pod 'dnsmasq-deleted' do
+  action :delete
 end
