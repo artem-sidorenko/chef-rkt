@@ -27,6 +27,10 @@ platforms:
 
 provisioner:
   name: chef_zero
+  attributes:
+    rkt:
+      install:
+        kernel_check: false
 
 verifier:
   name: inspec
