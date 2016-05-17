@@ -134,27 +134,29 @@ describe 'rkt::install' do
     end
   end
 
-  context 'unknown installation type' do
-    let(:install_type) { 'none' }
+  describe 'invoke the installation recipe' do
+    context 'unknown installation type' do
+      let(:install_type) { 'none' }
 
-    it 'should raise an exception' do
-      expect { chef_run }.to raise_error(RuntimeError, 'Unsupported installation type \'none\'')
+      it 'should raise an exception' do
+        expect { chef_run }.to raise_error(RuntimeError, 'Unsupported installation type \'none\'')
+      end
     end
-  end
 
-  context 'install from tgz' do
-    let(:install_type) { 'tgz' }
+    context 'install from tgz' do
+      let(:install_type) { 'tgz' }
 
-    it 'includes installation recipe from tgz' do
-      expect(chef_run).to include_recipe 'rkt::install_tgz'
+      it 'includes installation recipe from tgz' do
+        expect(chef_run).to include_recipe 'rkt::install_tgz'
+      end
     end
-  end
 
-  context 'install from package' do
-    let(:install_type) { 'package' }
+    context 'install from package' do
+      let(:install_type) { 'package' }
 
-    it 'includes installation recipe from package' do
-      expect(chef_run).to include_recipe 'rkt::install_package'
+      it 'includes installation recipe from package' do
+        expect(chef_run).to include_recipe 'rkt::install_package'
+      end
     end
   end
 end
