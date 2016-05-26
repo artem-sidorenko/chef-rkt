@@ -41,7 +41,8 @@ when 'rhel'
 when 'debian'
   if node['platform'] == 'ubuntu' && node['platform_version'] == '16.04'
     repo_url = "#{repo_url}/Ubuntu_16.04/"
-  elsif node['platform'] == 'ubuntu' && node['platform_version'] == '14.04'
+  elsif (node['platform'] == 'ubuntu' && node['platform_version'] == '14.04') ||
+        (node['platform'] == 'linuxmint' && node['platform_version'] =~ /^17\.3.*$/)
     repo_url = "#{repo_url}/Ubuntu_14.04/"
   elsif node['platform'] == 'debian' && node['platform_version'] =~ /^8\..*$/
     repo_url = "#{repo_url}/Debian_8.0/"
