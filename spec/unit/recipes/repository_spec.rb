@@ -98,6 +98,16 @@ describe 'rkt::repository' do
       end
     end
 
+    context 'mint 17 distribution' do
+      let(:platform) { 'linuxmint' }
+      let(:platform_version) { '17.3' }
+      let(:distro_url_postfix) { '/Ubuntu_14.04/' }
+
+      it 'should create repository' do
+        expect(chef_run).to add_apt_repository('rkt').with(uri: @repository_url)
+      end
+    end
+
     context 'debian 8.4 distribution' do
       let(:platform) { 'debian' }
       let(:platform_version) { '8.4' }
