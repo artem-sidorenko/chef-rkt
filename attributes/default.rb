@@ -7,5 +7,7 @@ default['rkt']['install']['tgz']['usr_dir'] = '/usr/lib/rkt'
 default['rkt']['install']['tgz']['var_dir'] = '/var/lib/rkt'
 default['rkt']['install']['tgz']['group_name'] = 'rkt'
 default['rkt']['install']['tgz']['sudo'] = true
+default['rkt']['install']['package']['manage_repository'] = true
+default['rkt']['install']['package']['repository_base_location'] = 'http://download.opensuse.org/repositories/home:/artem_sidorenko:/rkt'
 default['rkt']['install']['package']['name'] = 'rkt'
 default['rkt']['install']['kernel_check'] = true

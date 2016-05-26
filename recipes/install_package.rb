@@ -10,4 +10,8 @@
 # and at https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT
 #
 
+if node['rkt']['install']['package']['manage_repository']
+  include_recipe "#{cookbook_name}::repository"
+end
+
 package node['rkt']['install']['package']['name']

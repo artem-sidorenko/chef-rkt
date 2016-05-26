@@ -12,8 +12,33 @@
 require 'spec_helper'
 
 describe 'rkt::install_package' do
+  let(:platform_family) { 'rhel' }
+  let(:platform) { 'centos' }
+  let(:platform_version) { '7.2.1511' }
+  let(:manage_repository) { true }
   let(:chef_run) do
-    ChefSpec::SoloRunner.converge(described_recipe)
+    ChefSpec::SoloRunner.new do |node|
+      node.automatic['platform_family'] = platform_family
+      node.automatic['platform'] = platform
+      node.automatic['platform_version'] = platform_version
+      node.set['rkt']['install']['package']['manage_repository'] = manage_repository
+    end.converge(described_recipe)
+  end
+
+  context 'repository management is enabled' do
+    let(:manage_repository) { true }
+
+    it 'should include repository management recipe' do
+      expect(chef_run).to include_recipe 'rkt::repository'
+    end
+  end
+
+  context 'repository management is disabled' do
+    let(:manage_repository) { false }
+
+    it 'should include repository management recipe' do
+      expect(chef_run).not_to include_recipe 'rkt::repository'
+    end
   end
 
   it 'should install rkt package' do

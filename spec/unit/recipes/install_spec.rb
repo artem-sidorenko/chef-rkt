@@ -13,11 +13,12 @@ require 'spec_helper'
 
 describe 'rkt::install' do
   let(:install_type) { 'tgz' }
-  let(:systemd_system) { false }
-  let(:ubuntu_platform) { false }
-  let(:platform_family) { 'rhel' }
-  let(:kernel_release) { '3.19.0-32-generic' }
-  let(:kernel_parsed_release) { '3.19' }
+  let(:systemd_system) { true }
+  let(:ubuntu_platform) { true }
+  let(:platform_family) { 'debian' }
+  let(:platform_version) { '16.04' }
+  let(:kernel_release) { '4.4.0-22-generic' }
+  let(:kernel_parsed_release) { '4.4' }
   let(:kernel_check_enabled) { true }
   let(:chef_run) do
     ChefSpec::SoloRunner.new do |node|
@@ -26,6 +27,7 @@ describe 'rkt::install' do
       node.automatic['packages']['systemd'] = systemd_system ? { version: '229-XYZ' } : nil
       node.automatic['platform'] = ubuntu_platform ? 'ubuntu' : 'someotherplatform'
       node.automatic['platform_family'] = platform_family
+      node.automatic['platform_version'] = platform_version
       node.automatic['kernel']['release'] = kernel_release
     end.converge(described_recipe)
   end

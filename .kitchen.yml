@@ -51,7 +51,6 @@ suites:
             sudo: false
   - name: packages
     run_list:
-      - recipe[rkt_test::repositories]
       - recipe[rkt::default]
       - recipe[rkt_test::default]
     attributes:

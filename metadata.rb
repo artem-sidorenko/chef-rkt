@@ -10,6 +10,7 @@ version '0.0.1'
 
 depends 'systemd'
 depends 'yum'
+depends 'apt'
 
 supports 'centos', '>= 7.2'
 supports 'scientific', '>= 7.2'
