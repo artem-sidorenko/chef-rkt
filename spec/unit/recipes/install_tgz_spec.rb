@@ -20,7 +20,7 @@ describe 'rkt::install_tgz' do
   let(:chef_run) do
     ChefSpec::SoloRunner.new do |node|
       node.set['rkt']['install']['tgz']['sudo'] = setup_with_sudo
-      node.set['rkt']['install']['version'] = rkt_version
+      node.set['rkt']['install']['tgz']['version'] = rkt_version
     end.converge(described_recipe)
   end
 
