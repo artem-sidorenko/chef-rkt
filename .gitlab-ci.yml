@@ -32,17 +32,25 @@ spec:
 kitchen default:
   stage: test
   script:
-  - make kitchen KITCHEN_INSTANCE='default-'
-
-kitchen packages:
-  stage: test
-  script:
-  - make kitchen KITCHEN_INSTANCE='packages-'
+  - make kitchen KITCHEN_INSTANCE='^default-'
 
 kitchen without-sudo:
   stage: test
   script:
-  - make kitchen KITCHEN_INSTANCE='without-sudo-'
+  - make kitchen KITCHEN_INSTANCE='^without-sudo-'
+
+kitchen packages:
+  stage: test
+  script:
+  - make kitchen KITCHEN_INSTANCE='^packages-'
+
+kitchen testing packages:
+  stage: test
+  allow_failure: true
+  script:
+  - make kitchen KITCHEN_INSTANCE='^testing-packages-'
+  only:
+  - master
 
 release:
   stage: deploy

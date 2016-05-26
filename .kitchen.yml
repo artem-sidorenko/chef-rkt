@@ -57,3 +57,13 @@ suites:
       rkt:
         install:
           type: 'package'
+  - name: testing-packages
+    run_list:
+      - recipe[rkt::default]
+      - recipe[rkt_test::default]
+    attributes:
+      rkt:
+        install:
+          type: 'package'
+          package:
+            repository_base_location: http://download.opensuse.org/repositories/home:/artem_sidorenko:/rkt:/testing
