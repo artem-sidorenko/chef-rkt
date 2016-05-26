@@ -11,7 +11,7 @@
 #
 
 cache_path = "#{Chef::Config[:file_cache_path]}/#{cookbook_name}"
-version = node['rkt']['install']['version']
+version = node['rkt']['install']['tgz']['version']
 install_target_dir = node['rkt']['install']['tgz']['target_dir']
 install_target_bin = node['rkt']['install']['tgz']['target_bin']
 
