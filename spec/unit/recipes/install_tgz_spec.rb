@@ -57,6 +57,10 @@ describe 'rkt::install_tgz' do
     expect(chef_run).to create_directory('/var/lib/rkt')
   end
 
+  it 'should create garbage collection cron job' do
+    expect(chef_run).to create_cookbook_file('/etc/cron.hourly/1rkt-gc')
+  end
+
   context 'setup with sudo' do
     let(:setup_with_sudo) { true }
 

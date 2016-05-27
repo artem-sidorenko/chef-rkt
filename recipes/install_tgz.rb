@@ -106,6 +106,14 @@ directory node['rkt']['install']['tgz']['var_dir'] do
   action :create
 end
 
+cookbook_file '/etc/cron.hourly/1rkt-gc' do
+  source 'cron.hourly-rkt-gc'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
 if node['rkt']['install']['tgz']['sudo']
   template '/etc/sudoers.d/rkt' do
     mode '0600'

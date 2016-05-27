@@ -1,0 +1,5 @@
+#!/bin/sh
+# This file is managed by Chef. Changes will be overwritten.
+# Garbage collection of rkt pods
+
+/opt/rkt/rkt gc --grace-period=1h > /dev/null 2>&1
