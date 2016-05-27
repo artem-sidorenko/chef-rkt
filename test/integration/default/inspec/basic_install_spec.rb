@@ -41,3 +41,8 @@ describe file('/var/lib/rkt') do
   its('owner') { should eq 'root' }
   its('group') { should eq 'root' }
 end
+
+describe file('/etc/cron.hourly/1rkt-gc') do
+  it { should be_file }
+  it { should be_executable }
+end
