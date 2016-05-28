@@ -16,12 +16,12 @@
 # this will be checked by InSpec later
 rkt_pod 'dnsmasq' do
   action :create
-  image 'coreos.com/dnsmasq:v0.2.0'
+  image 'coreos.com/dnsmasq:v0.3.0'
 end
 
 rkt_pod 'dnsmasq-deleted' do
   action :create
-  image 'coreos.com/dnsmasq:v0.2.0'
+  image 'coreos.com/dnsmasq:v0.3.0'
 end
 
 # wait about 10 secs: pod spawning takes some time,

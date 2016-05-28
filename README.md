@@ -184,7 +184,7 @@ Resource implementation of rkt commands for image handling:
 #### Syntax
 
 ```ruby
-rkt_image 'coreos.com/dnsmasq:v0.2.0' do
+rkt_image 'coreos.com/dnsmasq:v0.3.0' do
   action :create
   trust_keys_from_https true
 end
@@ -225,7 +225,7 @@ This LWRP creates systemd container services (or upstart for Ubuntu 14.04) with 
 ```ruby
 rkt_pod 'dnsmasq' do
   action :create
-  image 'coreos.com/dnsmasq:v0.2.0'
+  image 'coreos.com/dnsmasq:v0.3.0'
 end
 ```
 

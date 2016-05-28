@@ -36,7 +36,7 @@ rkt_trust 'coreos.com/etcd-image-trust-delete' do
 end
 
 # this will be checked by InSpec later
-rkt_image 'coreos.com/dnsmasq:v0.2.0' do
+rkt_image 'coreos.com/dnsmasq:v0.3.0' do
   action :create
   trust_keys_from_https true
 end
