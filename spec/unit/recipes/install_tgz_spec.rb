@@ -14,7 +14,7 @@ require 'spec_helper'
 describe 'rkt::install_tgz' do
   let(:cache_path) { '/var/chef/cache/rkt' }
   let(:install_target_dir) { '/opt/rkt' }
-  let(:rkt_version) { '1.5.1' }
+  let(:rkt_version) { '1.6.0' }
   let(:setup_with_sudo) { false }
 
   let(:chef_run) do
