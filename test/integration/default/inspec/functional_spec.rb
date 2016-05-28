@@ -21,13 +21,13 @@ end
 # recipe: test_image
 describe command('rkt image list --no-legend=true --fields=name') do
   its('exit_status') { should eq 0 }
-  its('stdout') { should match 'coreos.com/dnsmasq:v0.2.0' }
+  its('stdout') { should match 'coreos.com/dnsmasq:v0.3.0' }
 end
 
 # recipe: test_pod
 describe command('rkt list --no-legend=true') do
   its('exit_status') { should eq 0 }
-  its('stdout') { should match '.*dnsmasq.*coreos.com/dnsmasq:v0.2.0.*running.*' }
+  its('stdout') { should match '.*dnsmasq.*coreos.com/dnsmasq:v0.3.0.*running.*' }
 end
 
 describe service('rkt-dnsmasq') do
