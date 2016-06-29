@@ -1,1 +1,0 @@
-../../default/inspec/rkt_functional_spec.rb

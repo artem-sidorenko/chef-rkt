@@ -34,6 +34,8 @@ provisioner:
 
 verifier:
   name: inspec
+  inspec_tests:
+    - test/integration-shared/default
 
 suites:
   - name: default
@@ -57,6 +59,10 @@ suites:
       rkt:
         install:
           type: 'package'
+    verifier:
+      inspec_tests:
+        - test/integration-shared/default
+        - test/integration-shared/packages
   - name: testing-packages
     run_list:
       - recipe[rkt::default]
@@ -67,3 +73,7 @@ suites:
           type: 'package'
           package:
             repository_base_location: http://download.opensuse.org/repositories/home:/artem_sidorenko:/rkt:/testing
+    verifier:
+      inspec_tests:
+        - test/integration-shared/default
+        - test/integration-shared/packages
