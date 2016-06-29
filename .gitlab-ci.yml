@@ -1,9 +1,9 @@
 image: centos:7
 
 variables:
-  CHEFDK_URL: "https://packages.chef.io/stable/el/7/chefdk-0.12.0-1.el7.x86_64.rpm"
-  CHEFDK_FILE: "chefdk-0.12.0-1.el7.x86_64.rpm"
-  CHEFDK_SHA256: "4a2a41f0b676fcbf1b778d37f491b0a74606b9dc6869deb05fff157473fa5a4a"
+  CHEFDK_URL: "https://packages.chef.io/stable/el/7/chefdk-0.15.15-1.el7.x86_64.rpm"
+  CHEFDK_FILE: "chefdk-0.15.15-1.el7.x86_64.rpm"
+  CHEFDK_SHA256: "4ec6ad89063c14c730955decaa1d33fd8b720eeec8055496e1645aa4cf9a1c8f"
 
 cache:
   key: "chef-rkt"

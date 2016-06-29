@@ -21,6 +21,4 @@ elsif os['family'] == 'ubuntu' || os['family'] == 'debian'
   describe file('/etc/apt/sources.list.d/rkt.list') do
     it { should be_file }
   end
-else
-  raise "Unsupported platform family #{os['family']}"
 end
