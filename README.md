@@ -10,7 +10,7 @@ on [github.com]. Development is done on [gitlab.com] only.
 
 -----------------------------------------------------------
 
-Chef cookbook for management of [coreos rkt].
+[Chef] cookbook for management of [coreos rkt].
 
 * [Requirements](#requirements)
 * [Usage](#usage)
@@ -226,6 +226,14 @@ This LWRP creates systemd container services (or upstart for Ubuntu 14.04) with 
 rkt_pod 'dnsmasq' do
   action :create
   image 'coreos.com/dnsmasq:v0.3.0'
+  volumes data_volume: {
+            kind: 'host',
+            source: '/data'
+          },
+          log_volume: {
+            kind: 'host',
+            source: '/var/log/container'
+          }
 end
 ```
 
@@ -237,6 +245,7 @@ rkt_pod 'name' do
   image                    String
   trust_keys_from_https    TrueClass, FalseClass
   action                   Symbol # defaults to :create if not specified
+  volumes                  Hash
 end
 ```
 
@@ -252,6 +261,7 @@ end
 | name                     | `[name]` | Name of pod                                     |
 | image                    |          | Image which should be run                       |
 | trust_keys_from_https    | `false`  | Automatically trust keys fetched via HTTPS      |
+| volumes                  |          | Volumes which should be mounted                 |
 
 ### rkt_trust
 
@@ -328,3 +338,4 @@ and at <https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT>
 [rkt fetch]: https://coreos.com/rkt/docs/latest/subcommands/fetch.html
 [rkt image rm]: https://coreos.com/rkt/docs/latest/subcommands/image.html#rkt-image-rm
 [systemd container services]: https://github.com/coreos/rkt/blob/master/Documentation/using-rkt-with-systemd.md#systemd-run
+[Chef]: https://www.chef.io/

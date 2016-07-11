@@ -13,14 +13,23 @@
 property :name, String, name_property: true
 property :image, String
 property :trust_keys_from_https, [TrueClass, FalseClass], default: false
+property :volumes, Hash, default: {}
 
 default_action :create
 
 action :create do
+  service_name = "rkt-#{name}"
   cmd_args = []
   cmd_args << '--trust-keys-from-https=true' if trust_keys_from_https
+
+  volumes.each do |volume, options|
+    options[:kind] ||= 'host'
+    raise "source option isn't configured for volume #{volume} in resource #{new_resource}" unless options[:source]
+
+    cmd_args << "--volume=#{volume},kind=#{options[:kind]},source=#{options[:source]}"
+  end
+
   args = cmd_args.join(' ')
-  service_name = "rkt-#{name}"
   exec_cmd = "/usr/bin/rkt run #{args} #{image}"
 
   if node['packages']['upstart']
