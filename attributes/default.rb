@@ -11,3 +11,4 @@ default['rkt']['install']['package']['manage_repository'] = true
 default['rkt']['install']['package']['repository_base_location'] = 'http://download.opensuse.org/repositories/home:/artem_sidorenko:/rkt'
 default['rkt']['install']['package']['name'] = 'rkt'
 default['rkt']['install']['kernel_check'] = true
+default['rkt']['conf']['net_conf_dir'] = '/etc/rkt/net.d'
