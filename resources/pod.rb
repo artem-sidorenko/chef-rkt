@@ -14,6 +14,7 @@ property :name, String, name_property: true
 property :image, String
 property :trust_keys_from_https, [TrueClass, FalseClass], default: false
 property :volumes, Hash, default: {}
+property :net, [String, Array, Hash], default: nil
 
 default_action :create
 
@@ -27,6 +28,21 @@ action :create do
     raise "source option isn't configured for volume #{volume} in resource #{new_resource}" unless options[:source]
 
     cmd_args << "--volume=#{volume},kind=#{options[:kind]},source=#{options[:source]}"
+  end
+
+  case net.class.to_s
+  when 'String'
+    cmd_args << "--net=#{net}"
+  when 'Array'
+    cmd_string = net.join(',')
+    cmd_args << "--net=#{cmd_string}"
+  when 'Hash'
+    net_values = []
+    net.each do |net, ip|
+      net_values << "#{net}:IP=#{ip}"
+    end
+    cmd_string = net_values.join(',')
+    cmd_args << "--net=#{cmd_string}"
   end
 
   args = cmd_args.join(' ')

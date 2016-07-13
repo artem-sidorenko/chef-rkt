@@ -43,3 +43,10 @@ when 'package'
 else
   raise "Unsupported installation type '#{node['rkt']['install']['type']}'"
 end
+
+# create conf directory for networks
+directory node['rkt']['conf']['net_conf_dir'] do
+  owner 'root'
+  group 'root'
+  mode '0750'
+end

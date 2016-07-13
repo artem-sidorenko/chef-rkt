@@ -46,3 +46,10 @@ describe file('/etc/cron.hourly/1rkt-gc') do
   it { should be_file }
   it { should be_executable }
 end
+
+describe file('/etc/rkt/net.d') do
+  it { should be_directory }
+  its('mode') { should eq 0750 }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+end

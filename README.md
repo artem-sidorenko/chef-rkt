@@ -99,7 +99,7 @@ end
 Recipes
 -------
 
-Recipes in this cookbook can help with installation of [coreos rkt]. Management of rkt resources is done via [LWRPs], which are documented [below](#resources).
+Recipes in this cookbook can help with installation of [coreos rkt]. Management of rkt resources is done via [custom resources], which are documented [below](#resources).
 
 ### default
 
@@ -214,11 +214,42 @@ end
 | no_store                 | `false`  | Ignore the local store by fetching              |
 | trust_keys_from_https    | `false`  | Automatically trust keys fetched via HTTPS      |
 
+### rkt_net
+
+This resource creates a network, which can be used by rkt pods.
+
+See [rkt networking documentation] for more information and details.
+
+#### Syntax
+
+```ruby
+rkt_net 'podnet' do
+  action :create
+  type 'macvlan',
+  options master: 'enp0s25',
+          mode: 'private'
+  ipam type: 'host-local',
+       subnet: '192.168.0.0/24'
+end
+```
+
+The full syntax:
+
+```ruby
+rkt_net 'name' do
+  name                     String # defaults to 'name' if not specified
+  type                     String
+  action                   Symbol # defaults to :create if not specified
+  options                  Hash
+  ipam                     Hash
+end
+```
+
 ### rkt_pod
 
 Run image in a pod.
 
-This LWRP creates systemd container services (or upstart for Ubuntu 14.04) with `rkt-` prefix and starts them.
+This resource creates systemd container services (or upstart for Ubuntu 14.04) with `rkt-` prefix and starts them.
 
 #### Syntax
 
@@ -234,6 +265,7 @@ rkt_pod 'dnsmasq' do
             kind: 'host',
             source: '/var/log/container'
           }
+  net 'podnet'
 end
 ```
 
@@ -246,6 +278,7 @@ rkt_pod 'name' do
   trust_keys_from_https    TrueClass, FalseClass
   action                   Symbol # defaults to :create if not specified
   volumes                  Hash
+  net                      String, Array, Hash
 end
 ```
 
@@ -262,6 +295,30 @@ end
 | image                    |          | Image which should be run                       |
 | trust_keys_from_https    | `false`  | Automatically trust keys fetched via HTTPS      |
 | volumes                  |          | Volumes which should be mounted                 |
+| net                      |          | Network options for the pod                     |
+
+#### Advanced network options
+
+You can specify multiple networks as Array in the `net` property:
+
+```ruby
+rkt_pod 'dnsmasq' do
+  action :create
+  image 'coreos.com/dnsmasq:v0.3.0'
+  net ['podnet', 'internalnet']
+end
+```
+
+If you use host-local IP provider for `pod-net` and `internal-net` and want to specify static IPs for the pod, you can pass a Hash in the net property:
+
+```ruby
+rkt_pod 'dnsmasq' do
+  action :create
+  image 'coreos.com/dnsmasq:v0.3.0'
+  net podnet: '192.168.0.1',
+      internalnet: '192.168.2.1'
+end
+```
 
 ### rkt_trust
 
@@ -326,7 +383,7 @@ See the COPYRIGHT file at the top-level directory of this distribution
 and at <https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT>
 
 [coreos rkt]: https://github.com/coreos/rkt
-[LWRPs]: https://chefheads.wordpress.com/2015/03/30/lwrp-an-introduction/
+[custom resources]: https://docs.chef.io/custom_resources.html
 [release tarballs with compiled rkt]: https://github.com/coreos/rkt/releases
 [attributes/default.rb]: ./attributes/default.rb
 [use this repositories]: http://software.opensuse.org/download.html?project=home%3Aartem_sidorenko%3Arkt&package=rkt
@@ -339,3 +396,4 @@ and at <https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT>
 [rkt image rm]: https://coreos.com/rkt/docs/latest/subcommands/image.html#rkt-image-rm
 [systemd container services]: https://github.com/coreos/rkt/blob/master/Documentation/using-rkt-with-systemd.md#systemd-run
 [Chef]: https://www.chef.io/
+[rkt networking documentation]: https://coreos.com/rkt/docs/latest/networking/overview.html#setting-up-additional-networks

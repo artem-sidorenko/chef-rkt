@@ -38,11 +38,25 @@ end
 
 describe command('rkt list --no-legend=true | grep dnsmasq | grep running | wc -l') do
   its('exit_status') { should eq 0 }
-  its('stdout') { should match '1' }
+  its('stdout') { should match '2' }
 end
 
 describe service('rkt-dnsmasq-deleted') do
   it { should_not be_installed }
   it { should_not be_enabled }
   it { should_not be_running }
+end
+
+# recipe: test_net
+describe file('/etc/rkt/net.d/testnet.conf') do
+  it { should be_file }
+end
+
+describe file('/etc/rkt/net.d/netdeleted.conf') do
+  it { should_not exist }
+end
+
+describe command('rkt list --no-legend=true | grep dnsmasq | grep running') do
+  its('exit_status') { should eq 0 }
+  its('stdout') { should match 'testnet:ip4=192.168.0.10, default-restricted:' }
 end
