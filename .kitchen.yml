@@ -8,12 +8,25 @@ driver:
 platforms:
 - name: centos-7-0-x64
   transport:
-   ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
-   max_wait_until_ready: 30
+    ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
+    max_wait_until_ready: 30
 - name: ubuntu-14-04-x64
   transport:
-   ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
-   max_wait_until_ready: 30
+    ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
+    max_wait_until_ready: 30
+- name: ubuntu-16-04-x64
+  transport:
+    ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
+    max_wait_until_ready: 30
+- name: debian-8-x64
+  # DO debian image doesn't have sudo
+  provisioner:
+    sudo: false
+  verifier:
+    sudo: false
+  transport:
+    ssh_key: "<%= ENV['CI_SSH_KEY'] %>"
+    max_wait_until_ready: 30
 <% else %>
 driver:
   name: vagrant
@@ -34,6 +47,9 @@ provisioner:
 
 verifier:
   name: inspec
+  # https://github.com/chef/inspec/issues/820
+  # https://github.com/chef/kitchen-inspec/issues/92
+  format: progress
   inspec_tests:
     - test/integration-shared/default
 

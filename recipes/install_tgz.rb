@@ -115,6 +115,8 @@ cookbook_file '/etc/cron.hourly/1rkt-gc' do
 end
 
 if node['rkt']['install']['tgz']['sudo']
+  package 'sudo'
+
   template '/etc/sudoers.d/rkt' do
     mode '0600'
     owner 'root'
