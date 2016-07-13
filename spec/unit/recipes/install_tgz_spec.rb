@@ -64,6 +64,10 @@ describe 'rkt::install_tgz' do
   context 'setup with sudo' do
     let(:setup_with_sudo) { true }
 
+    it 'should install sudo package' do
+      expect(chef_run).to install_package('sudo')
+    end
+
     it 'should create sudoers configuration' do
       expect(chef_run).to render_file('/etc/sudoers.d/rkt')
     end
