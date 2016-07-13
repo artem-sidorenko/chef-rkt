@@ -99,7 +99,7 @@ end
 Recipes
 -------
 
-Recipes in this cookbook can help with installation of [coreos rkt]. Management of rkt resources is done via [LWRPs], which are documented [below](#resources).
+Recipes in this cookbook can help with installation of [coreos rkt]. Management of rkt resources is done via [custom resources], which are documented [below](#resources).
 
 ### default
 
@@ -216,9 +216,7 @@ end
 
 ### rkt_net
 
-Create a network for rkt.
-
-This LWRP creates a network, which can be used by rkt pods.
+This resource creates a network, which can be used by rkt pods.
 
 See [rkt networking documentation] for more information and details.
 
@@ -251,7 +249,7 @@ end
 
 Run image in a pod.
 
-This LWRP creates systemd container services (or upstart for Ubuntu 14.04) with `rkt-` prefix and starts them.
+This resource creates systemd container services (or upstart for Ubuntu 14.04) with `rkt-` prefix and starts them.
 
 #### Syntax
 
@@ -385,7 +383,7 @@ See the COPYRIGHT file at the top-level directory of this distribution
 and at <https://gitlab.com/artem-sidorenko/chef-rkt/blob/master/COPYRIGHT>
 
 [coreos rkt]: https://github.com/coreos/rkt
-[LWRPs]: https://chefheads.wordpress.com/2015/03/30/lwrp-an-introduction/
+[custom resources]: https://docs.chef.io/custom_resources.html
 [release tarballs with compiled rkt]: https://github.com/coreos/rkt/releases
 [attributes/default.rb]: ./attributes/default.rb
 [use this repositories]: http://software.opensuse.org/download.html?project=home%3Aartem_sidorenko%3Arkt&package=rkt
