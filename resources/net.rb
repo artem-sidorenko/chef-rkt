@@ -13,7 +13,7 @@
 require 'json'
 
 property :name, String, name_property: true
-property :type, String
+property :type, String, required: true
 property :options, Hash, default: {}
 property :ipam, Hash, default: {}
 

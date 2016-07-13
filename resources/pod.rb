@@ -11,10 +11,10 @@
 #
 
 property :name, String, name_property: true
-property :image, String
+property :image, String, required: true
 property :trust_keys_from_https, [TrueClass, FalseClass], default: false
 property :volumes, Hash, default: {}
-property :net, [String, Array, Hash], default: nil
+property :net, [String, Array, Hash]
 
 default_action :create
 
