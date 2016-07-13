@@ -34,6 +34,9 @@ provisioner:
 
 verifier:
   name: inspec
+  # https://github.com/chef/inspec/issues/820
+  # https://github.com/chef/kitchen-inspec/issues/92
+  format: progress
   inspec_tests:
     - test/integration-shared/default
 
