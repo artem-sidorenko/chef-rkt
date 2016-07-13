@@ -161,4 +161,8 @@ describe 'rkt::install' do
       end
     end
   end
+
+  it 'should create network configuration directory' do
+    expect(chef_run).to create_directory('/etc/rkt/net.d')
+  end
 end
