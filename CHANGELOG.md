@@ -4,7 +4,8 @@ Changelog
 0.2.0 (unreleased)
 -----
 
-* Using rkt 1.6.0 as default version for tarball installations
+* Using rkt 1.10.1 as default version for tarball installations
+* Update the upstream signature files to asc for tarball installations
 
 0.1.0
 -----

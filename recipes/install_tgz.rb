@@ -37,8 +37,8 @@ remote_file "#{cache_path}/rkt-v#{version}.tar.gz" do
   action :create
 end
 
-remote_file "#{cache_path}/rkt-v#{version}.tar.gz.sig" do
-  source "https://github.com/coreos/rkt/releases/download/v#{version}/rkt-v#{version}.tar.gz.sig"
+remote_file "#{cache_path}/rkt-v#{version}.tar.gz.asc" do
+  source "https://github.com/coreos/rkt/releases/download/v#{version}/rkt-v#{version}.tar.gz.asc"
   owner 'root'
   group 'root'
   mode '0600'
@@ -52,7 +52,7 @@ bash 'check signature' do
   mkdir -p "#{cache_path}/gpghome"
   export GNUPGHOME="#{cache_path}/gpghome"
   gpg --import "#{cache_path}/coreos_app_sign.key"
-  gpg --verify "#{cache_path}/rkt-v#{version}.tar.gz.sig"
+  gpg --verify "#{cache_path}/rkt-v#{version}.tar.gz.asc"
   rm -rf "#{cache_path}/gpghome"
   EOS
   flags '-e'
