@@ -14,7 +14,7 @@ require 'spec_helper'
 describe 'rkt::install_tgz' do
   let(:cache_path) { '/var/chef/cache/rkt' }
   let(:install_target_dir) { '/opt/rkt' }
-  let(:rkt_version) { '1.6.0' }
+  let(:rkt_version) { '1.10.1' }
   let(:setup_with_sudo) { false }
 
   let(:chef_run) do
@@ -31,12 +31,12 @@ describe 'rkt::install_tgz' do
 
   it 'should download the rkt archive and signature' do
     expect(chef_run).to create_remote_file("#{cache_path}/rkt-v#{rkt_version}.tar.gz")
-    expect(chef_run).to create_remote_file("#{cache_path}/rkt-v#{rkt_version}.tar.gz.sig")
+    expect(chef_run).to create_remote_file("#{cache_path}/rkt-v#{rkt_version}.tar.gz.asc")
   end
 
   it 'should check the signature if needed' do
     expect(chef_run.bash('check signature')).to do_nothing
-    expect(chef_run.remote_file("#{cache_path}/rkt-v#{rkt_version}.tar.gz.sig"))
+    expect(chef_run.remote_file("#{cache_path}/rkt-v#{rkt_version}.tar.gz.asc"))
       .to notify('bash[check signature]').to(:run).immediately
   end
 
