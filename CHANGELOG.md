@@ -6,6 +6,10 @@ Changelog
 
 * Using rkt 1.10.1 as default version for tarball installations
 * Update the upstream signature files to asc for tarball installations
+* Support of volumes for rkt_pod resources added
+* Support of net property for rkt_pod resources added
+* Support of rkt_net resources added
+* Several improvements of tests and test setup
 
 0.1.0
 -----
